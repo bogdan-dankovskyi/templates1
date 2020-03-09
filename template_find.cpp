@@ -21,16 +21,49 @@ InputIterator myFind(InputIterator itFirst, InputIterator itLast, const T& val)
 
 }
 
+template <typename T, unsigned N>
+void myPrint(T (&arr) [N])
+{
+	for (auto elem : arr)
+		std::cout << elem << std::endl;
+
+}
+
+template <typename T, unsigned N = 0>
+void myPrint1(T a)
+{
+	std::cout << "In myPrint1 " << a << std::endl;
+	std::cout << "In myPrint1 " << N << std::endl;
+}
+
+template <typename T, unsigned N>
+T* myBegin(T(&arr)[N])
+{
+	return &arr[0];
+}
+
+template <typename T, unsigned N>
+T* myEnd(T(&arr)[N])
+{
+	return &arr[N];
+}
+
+template <typename T, unsigned N>
+constexpr unsigned mySize(T(&arr)[N])
+{
+	return N;
+}
+
 int main()
 {
-	std::vector<int> a{0,1,2,3,4,5};
+	std::vector<int> a{ 0,1,2,3,4,5 };
 
 	if (myFind(begin(a), end(a), 3) != end(a))
 		std::cout << "found 3" << std::endl;
 	else
 		std::cout << "not found 3" << std::endl;
 
-	
+
 	if (myFind(begin(a), end(a), 5) != end(a))
 		std::cout << "found 5" << std::endl;
 	else
@@ -57,6 +90,36 @@ int main()
 		std::cout << "found e" << std::endl;
 	else
 		std::cout << "not found e" << std::endl;
+
+	std::cout << "=====================" << std::endl << std::endl;
+	int d[3] = {1,3,4};
+	myPrint(d);
+	
+	int e[1];
+	myPrint(e);
+
+	std::cout << "=====================" << std::endl << std::endl;
+
+	if (myFind(myBegin(d), myEnd(d), 3) != myEnd(d))
+		std::cout << "found 3" << std::endl;
+	else
+		std::cout << "not found 3" << std::endl;
+
+	if (myFind(myBegin(d), myEnd(d), 5) != myEnd(d))
+		std::cout << "found 5" << std::endl;
+	else
+		std::cout << "not found 5" << std::endl;
+
+	std::cout << "=====================" << std::endl << std::endl;
+
+	std::cout << "size of d = " << mySize(d) << std::endl;
+
+	std::cout << "=====================" << std::endl << std::endl;
+
+	int f = 5;
+	myPrint1<int,6>(f);
+	myPrint1<std::string>("A");
+
 
     std::cout << "end main\n";
 }
